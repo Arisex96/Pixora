@@ -13,48 +13,30 @@ import {
   BenefitsSection,
   FeaturesSection,
   Footer,
-} from '@/components';
-import LoadingScreen from '@/components/screens/LoadingScreen';
-import RunningServer from '@/components/screens/RunningServer';
-import { useAuth } from '@/context/AuthContext';
-import axios from 'axios';
-import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+} from "@/components";
+import LoadingScreen from "@/components/screens/LoadingScreen";
+import { useAuth } from "@/context/AuthContext";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function Home() {
   const router = useRouter();
   const { loading, isAuthenticated } = useAuth();
 
-  const [isServerRunning, setIsServerRunning] = useState(false);
-
-  useEffect(() => {
-    const checkServer = async () => {
-      try {
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_API}/`);
-        if (response.data === "Server is running!") {
-          setIsServerRunning(true);
-        }
-      } catch (error) {
-        setIsServerRunning(false);
-      }
-    };
-    checkServer();
-  }, []);
-
+  // If user is already authenticated, redirect to dashboard
+  // The server check happens naturally via AuthContext's verifyUser
   useEffect(() => {
     if (!loading && isAuthenticated) {
       router.push("/dashboard");
     }
   }, [loading, isAuthenticated, router]);
-  
-  if (!isServerRunning) {
-    return <RunningServer />;
-  }
 
-  if (loading) {
+  // Show loading only for authenticated users being redirected
+  if (loading && isAuthenticated) {
     return <LoadingScreen />;
   }
 
+  // Show the landing page IMMEDIATELY - no server check needed for new visitors
   return (
     <>
       <Header />
