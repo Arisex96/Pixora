@@ -1,0 +1,66 @@
+# Dependencies
+node_modules/
+/.pnp
+.pnp.js
+
+# Testing
+/coverage
+
+# Next.js
+/.next/
+/out/
+.swc
+
+# Production
+/build
+
+# Miscellaneous
+*.pem
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDE/Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+*.sublime-project
+*.sublime-workspace
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# System
+.env.*.local
+
+# Vercel
+.vercel
+
+# Sensitive files
+.env*.local
+!.env.example*
+
+# npm
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Miscellaneous
+.cache/
+*.tmp
