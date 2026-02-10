@@ -1,9 +1,18 @@
 "use client";
 import { useState } from "react";
+import { useSession } from "next-auth/react";
 import { Sidebar, FooterCompact, LoggedInHeader } from "@/components";
+import LoadingScreen from "@/components/screens/LoadingScreen";
 
 function AuthLayout({ children }) {
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
+  const { status } = useSession();
+
+  // Wait for session to be loaded before rendering protected content
+  // This ensures API calls have the auth token available
+  if (status === "loading") {
+    return <LoadingScreen />;
+  }
 
   return (
     <div className="flex min-h-screen bg-zinc-950 text-white">

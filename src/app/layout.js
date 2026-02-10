@@ -8,7 +8,6 @@ import { Toaster } from "react-hot-toast";
 import { Suspense } from "react";
 import LoadingScreen from "@/components/screens/LoadingScreen";
 import NextTopLoader from "nextjs-toploader";
-import { DeveloperInfo } from "@/components";
 
 export const metadata = {
   title: "Pixora — Upload, share, and shine—your images, your way.",
@@ -31,7 +30,6 @@ export default function RootLayout({ children }) {
                     />
                     <Toaster position="top-center" />
                     {children}
-                    <DeveloperInfo />
                   </LikesFavoritesProvider>
                 </UsersProvider>
               </FollowProvider>

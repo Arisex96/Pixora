@@ -22,6 +22,8 @@ const RecentActivity = () => {
 
   useEffect(() => {
     const fetchActivities = async () => {
+      if (!api.isReady) return; // Wait for auth to be ready
+      
       try {
         setLoading(true);
         // Fetch recent notifications from the API
@@ -36,7 +38,7 @@ const RecentActivity = () => {
     };
 
     fetchActivities();
-  }, [api]);
+  }, [api, api.isReady]);
 
   // Get activity icon based on notification type
   const getActivityIcon = (type) => {

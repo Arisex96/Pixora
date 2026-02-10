@@ -72,7 +72,7 @@ const NotificationsMenu = ({ activeDropdown, toggleDropdown }) => {
 
   // Fetch notifications
   const fetchNotifications = useCallback(async () => {
-    if (!user) return;
+    if (!user || !api.isReady) return;
     
     try {
       setLoading(true);
@@ -87,11 +87,11 @@ const NotificationsMenu = ({ activeDropdown, toggleDropdown }) => {
       setError('Failed to load notifications');
       setLoading(false);
     }
-  }, [api, user, activeFilter]);
+  }, [api, api.isReady, user, activeFilter]);
 
   // Fetch unread count
   const fetchUnreadCount = useCallback(async () => {
-    if (!user) return;
+    if (!user || !api.isReady) return;
     
     try {
       const response = await api.get('/api/notifications/unread/count');
@@ -99,7 +99,7 @@ const NotificationsMenu = ({ activeDropdown, toggleDropdown }) => {
     } catch (err) {
       console.error('Error fetching unread count:', err);
     }
-  }, [api, user]);
+  }, [api, api.isReady, user]);
 
   // Mark notification as read
   const markAsRead = async (notificationId, event) => {

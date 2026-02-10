@@ -15,6 +15,8 @@ const TrendingImages = ({ category }) => {
 
   // Fetch images from API
   const fetchImages = async () => {
+    if (!api.isReady) return; // Wait for auth to be ready
+    
     setLoading(true);
     try {
       // Add category to the API request if it's not 'all'
@@ -37,10 +39,10 @@ const TrendingImages = ({ category }) => {
     }
   };
 
-  // Re-fetch when category changes
+  // Re-fetch when category changes or when auth becomes ready
   useEffect(() => {
     fetchImages();
-  }, [category]);
+  }, [category, api.isReady]);
 
   return (
     <div>

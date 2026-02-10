@@ -3,10 +3,10 @@
 
 import { useSession } from 'next-auth/react';
 import { api } from '@/lib/api';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 
 export const useApi = () => {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
 
   useEffect(() => {
     // Add request interceptor
@@ -26,5 +26,14 @@ export const useApi = () => {
     };
   }, [session?.backendToken]); // Only depend on the token, not the entire session object
 
-  return api;
+  // Return both the api and loading state so components can wait
+  const result = useMemo(() => {
+    // Attach isReady property to know when auth is loaded
+    api.isReady = status !== 'loading' && (!!session?.backendToken || 
+      (typeof window !== 'undefined' && !!window.localStorage.getItem('auth_token')));
+    api.status = status;
+    return api;
+  }, [session?.backendToken, status]);
+
+  return result;
 };
